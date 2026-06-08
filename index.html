@@ -1468,77 +1468,95 @@
     observer.observe(el);
   });
 
-// ── Lead Magnet Popup Submit Handler ──
-function handlePopupSubmit() {
-  var emailInput = document.getElementById('popup-email');
-  var email = emailInput.value;
-  var submitBtn = document.getElementById('popup-submit');
+  // ── Lead Magnet Popup (7s delay, once per session, Google Sheets, New Tab) ───────────────
+  (function () {
+    'use strict';
 
-  // Kiểm tra email hợp lệ
-  if (!email || !email.includes('@')) {
-    emailInput.style.borderColor = 'rgba(239,68,68,.8)';
-    emailInput.style.boxShadow = '0 0 0 3px rgba(239,68,68,.12)';
-    emailInput.placeholder = 'Please enter a valid email address';
-    return;
-  }
+    const SESSION_KEY = 'lm_popup_shown';
+    
+    // Đặt link Google Apps Script Web App của bạn vào đây:
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwG3AqlMNgmWeDh5z469-UIbYoBTE-YI3HaIobQpTkSCvjczWGyTsMh5_31XA-Mn7iQUA/exec';
 
-  // Đổi chữ trên nút thành Đang gửi để khách biết
-  submitBtn.innerHTML = 'Sending... ⏳';
-  submitBtn.disabled = true;
+    if (sessionStorage.getItem(SESSION_KEY)) return;
 
-  // Đóng gói dữ liệu
-  var formData = new FormData();
-  formData.append('email', email);
+    const overlay   = document.getElementById('lm-overlay');
+    const closeBtn  = document.getElementById('lm-close');
+    const form      = document.getElementById('lm-form');
+    const emailInput = document.getElementById('lm-email');
+    const submitBtn = document.getElementById('lm-submit');
 
-  // Link Web App URL bạn lấy từ Google Apps Script
-  var scriptURL = 'https://script.google.com/macros/s/AKfycbwD4sCIHyH6XkCg0dODxgZ40WSXszHcPnSsp2F2dWjmUfkam_yCA4Tk-4-GSQYXpR2mhw/exec';
+    if (!overlay) return;
 
-  // Gửi data về Google Sheets (Đã fix lỗi CORS)
-  fetch(scriptURL, { 
-      method: 'POST', 
-      body: formData,
-      mode: 'no-cors' 
-    })
-    .then(response => {
-      // Ẩn form, hiện thông báo thành công
-      document.getElementById('popup-form').style.display = 'none';
-      document.getElementById('popup-success').style.display = 'block';
-    })
-    .catch(error => {
-      console.error('Error!', error.message);
-      submitBtn.innerHTML = 'Error! Try again.';
-      submitBtn.disabled = false;
+    function openPopup() {
+      overlay.classList.add('lm-visible');
+      document.body.style.overflow = 'hidden';
+      if(emailInput) emailInput.focus();
+      sessionStorage.setItem(SESSION_KEY, '1'); 
+    }
+
+    function closePopup() {
+      overlay.classList.remove('lm-visible');
+      document.body.style.overflow = '';
+    }
+
+    const triggerTimer = setTimeout(openPopup, 7000);
+
+    if(closeBtn) closeBtn.addEventListener('click', closePopup);
+    if(overlay) overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) closePopup();
     });
-}
+    
+    // Close: Escape key
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && overlay.classList.contains('lm-visible')) closePopup();
+    });
 
-// ── Popup — triggers 7 seconds after page load, once per session ──
-(function(){
-  var popup = document.getElementById('scroll-popup');
-  if (!popup) return;
-  var shown = sessionStorage.getItem('popup_shown');
-  function openPopup() {
-    if (shown) return;
-    shown = true;
-    sessionStorage.setItem('popup_shown', '1');
-    popup.classList.add('active');
-  }
-  function closePopup() { popup.classList.remove('active'); }
+    if(form) form.addEventListener('submit', async function (e) {
+      e.preventDefault(); 
 
-  // 7-second delay trigger (replaces scroll event)
-  setTimeout(openPopup, 7000);
+      const email = emailInput.value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  var closeBtn = document.getElementById('popup-close');
-  var backdrop = document.getElementById('popup-backdrop');
-  if (closeBtn) closeBtn.addEventListener('click', closePopup);
-  if (backdrop) backdrop.addEventListener('click', closePopup);
-})();
+      if (!emailRegex.test(email)) {
+        emailInput.classList.remove('lm-invalid');      
+        void emailInput.offsetWidth;                    
+        emailInput.classList.add('lm-invalid');
+        emailInput.focus();
+        emailInput.addEventListener('animationend', function handler() {
+          emailInput.classList.remove('lm-invalid');
+          emailInput.removeEventListener('animationend', handler);
+        });
+        return;
+      }
 
-// ── Scroll Reveal ──
-var io = new IntersectionObserver(function(entries) {
-  entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(function(el) { io.observe(el); });
-</script>
+      submitBtn.textContent  = 'Processing...';
+      submitBtn.style.filter = 'brightness(0.85)';
+      submitBtn.disabled     = true;
+      emailInput.disabled    = true;
+
+      try {
+        const formData = new FormData(form);
+        await fetch(GOOGLE_SCRIPT_URL, { 
+          method: 'POST', 
+          body: formData, 
+          mode: 'no-cors' 
+        });
+      } catch (error) {
+        console.error('Lỗi khi gửi form:', error);
+      } finally {
+        submitBtn.textContent = 'Success! Opening...';
+        submitBtn.style.background = 'linear-gradient(135deg, #34d399 0%, #059669 100%)';
+        
+        setTimeout(function () {
+          window.open('https://tryholo.ai/', '_blank');
+          closePopup();
+        }, 800);
+      }
+    });
+
+    window.addEventListener('beforeunload', function () {
+      clearTimeout(triggerTimer);
+    });
 
   })();
 
