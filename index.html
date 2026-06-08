@@ -1535,16 +1535,24 @@
       submitBtn.disabled     = true;
       emailInput.disabled    = true;
 
-      try {
-        const formData = new FormData(form);
-        await fetch(GOOGLE_SCRIPT_URL, { 
-          method: 'POST', 
-          body: formData, 
-          mode: 'no-cors' 
-        });
-      } catch (error) {
-        console.error('Lỗi khi gửi form:', error);
-      } finally {
+try {
+    const formData = new FormData(form);
+
+    console.log("===== FORM DATA =====");
+
+    for (const pair of formData.entries()) {
+        console.log(pair[0], pair[1]);
+    }
+
+    await fetch(GOOGLE_SCRIPT_URL, { 
+      method: 'POST', 
+      body: formData, 
+      mode: 'no-cors' 
+    });
+
+} catch (error) {
+    console.error('Lỗi khi gửi form:', error);
+} finally {
         submitBtn.textContent = 'Success! Opening...';
         submitBtn.style.background = 'linear-gradient(135deg, #34d399 0%, #059669 100%)';
         
