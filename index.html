@@ -1536,9 +1536,12 @@
       emailInput.disabled    = true;
 
 try {
-    const formData = new FormData(form);
+  
+    const formData = new FormData();
+formData.append("email", emailInput.value);
 
-    console.log("===== FORM DATA =====");
+console.log("MANUAL EMAIL =", emailInput.value);
+
 
     for (const pair of formData.entries()) {
         console.log(pair[0], pair[1]);
