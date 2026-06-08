@@ -1468,7 +1468,7 @@
     observer.observe(el);
   });
 
- // ── Lead Magnet Popup Submit Handler ──
+// ── Lead Magnet Popup Submit Handler ──
 function handlePopupSubmit() {
   var emailInput = document.getElementById('popup-email');
   var email = emailInput.value;
@@ -1508,17 +1508,37 @@ function handlePopupSubmit() {
       console.error('Error!', error.message);
       submitBtn.innerHTML = 'Error! Try again.';
       submitBtn.disabled = false;
-        
-        setTimeout(function () {
-          window.open('https://tryholo.ai/', '_blank');
-          closePopup();
-        }, 800);
-      }
     });
+}
 
-    window.addEventListener('beforeunload', function () {
-      clearTimeout(triggerTimer);
-    });
+// ── Popup — triggers 7 seconds after page load, once per session ──
+(function(){
+  var popup = document.getElementById('scroll-popup');
+  if (!popup) return;
+  var shown = sessionStorage.getItem('popup_shown');
+  function openPopup() {
+    if (shown) return;
+    shown = true;
+    sessionStorage.setItem('popup_shown', '1');
+    popup.classList.add('active');
+  }
+  function closePopup() { popup.classList.remove('active'); }
+
+  // 7-second delay trigger (replaces scroll event)
+  setTimeout(openPopup, 7000);
+
+  var closeBtn = document.getElementById('popup-close');
+  var backdrop = document.getElementById('popup-backdrop');
+  if (closeBtn) closeBtn.addEventListener('click', closePopup);
+  if (backdrop) backdrop.addEventListener('click', closePopup);
+})();
+
+// ── Scroll Reveal ──
+var io = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(function(el) { io.observe(el); });
+</script>
 
   })();
 
