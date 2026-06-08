@@ -294,6 +294,29 @@
   .rail-rtl { animation: railRTL 32s linear infinite; }
   .rail-ltr:hover, .rail-rtl:hover { animation-play-state: paused; }
 
+  .creative-showcase { display: flex; flex-direction: column; gap: 12px; }
+  .creative-mask {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  }
+  .creative-rail {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    width: max-content;
+  }
+  .creative-rail img,
+  .creative-rail video {
+    height: 200px;
+    width: auto;
+    max-width: none;
+    border-radius: 12px;
+    object-fit: cover;
+    display: block;
+    flex-shrink: 0;
+  }
+
   /* ── Responsive nav ─────────────────────────────────────────── */
   @media (max-width: 768px) {
     .hero-visual { display: block; margin-top: 2rem; min-height: 380px !important; }
@@ -666,7 +689,7 @@
     </div>
 
     <!-- Right: Hero Visual with video + Holo robot -->
-    <div class="hero-visual relative w-full flex items-center justify-center overflow-visible"
+    <div class="hero-visual relative w-full flex items-center justify-center overflow-visible" style="min-height:480px;">
 
       <!-- Ambient glow behind everything -->
       <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -775,7 +798,6 @@
   </div>
 
   <!-- Auto-scrolling image rail – single combined row like tryholo.ai -->
-  <div style="overflow:hidden;-webkit-mask-image:linear-gradient(to right,transparent 0%,black 8%,black 92%,transparent 100%);mask-image:linear-gradient(to right,transparent 0%,black 8%,black 92%,transparent 100%);">
   <div class="creative-showcase">
 
   <div class="creative-mask">
@@ -843,13 +865,6 @@
     </a>
   </div>
 
-</div>
-
-  <div class="text-center mt-10">
-    <a href="https://tryholo.ai/" target="_blank" class="grad-btn text-white font-bold text-sm px-8 py-3.5 rounded-2xl shadow-lg shadow-purple-500/25 inline-block">
-      Launch 10x More Content — 70% Off →
-    </a>
-  </div>
 </div>
 
 <!-- ======================================================
