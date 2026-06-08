@@ -283,24 +283,17 @@
 
   /* ── Creative rails (image + video scroll) ─────────────────── */
   @keyframes railLTR {
-    0%   { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    0%   { transform: translateX(-25%); }
+    100% { transform: translateX(-75%); }
   }
-  @keyframes railRTL {
-    0%   { transform: translateX(-50%); }
-    100% { transform: translateX(0); }
-  }
-  .rail-ltr { animation: railLTR 28s linear infinite; }
-  .rail-rtl { animation: railRTL 32s linear infinite; }
-  .rail-ltr:hover, .rail-rtl:hover { animation-play-state: paused; }
+  .rail-ltr { animation: railLTR 60s linear infinite; }
+  .rail-ltr:hover { animation-play-state: paused; }
 
   .creative-showcase {
     display: flex;
     flex-direction: column;
     gap: 12px;
     overflow: hidden;
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
   }
   .creative-mask { display: contents; }
   .creative-rail {
@@ -311,10 +304,10 @@
   }
   .creative-rail img,
   .creative-rail video {
-    height: 200px;
+    height: 220px;
     width: auto;
     max-width: none;
-    border-radius: 12px;
+    border-radius: 14px;
     object-fit: cover;
     display: block;
     flex-shrink: 0;
@@ -609,7 +602,7 @@
     <button id="lm-close">✕</button>
     <span id="lm-emoji">🎁</span>
     <h2 id="lm-headline"><span class="lm-grad">Holo AI 70% OFF</span></h2>
-    <p id="lm-sub">Enter your email to claim your 70% discount!</p>
+    <p id="lm-sub">Enter your email to claim your 70% discount — yours today only!</p>
    <form id="lm-form">
   <!-- THUỘC TÍNH name="email" LÀ BẮT BUỘC ĐỂ ỨNG DỤNG NHẬN ĐƯỢC -->
  <input type="email" name="email" id="lm-email" placeholder="Enter your email address..." required />
@@ -800,63 +793,29 @@
     <p class="text-zinc-400 mt-2">You just didn't know it was AI.</p>
   </div>
 
-  <!-- Auto-scrolling image rail – single combined row like tryholo.ai -->
+  <!-- Auto-scrolling single combined rail -->
   <div class="creative-showcase">
-
   <div class="creative-mask">
 
-    <!-- Row 1 -->
     <div class="creative-rail rail-ltr">
-
+      <!-- Bộ 1 -->
       <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/1.avif" alt="">
+      <video muted loop playsinline autoplay preload="metadata"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/5.mp4" type="video/mp4"></video>
       <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/4.avif" alt="">
+      <video muted loop playsinline autoplay preload="metadata"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/2.mp4" type="video/mp4"></video>
       <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/6.webp" alt="">
+      <video muted loop playsinline autoplay preload="metadata"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/3.mp4" type="video/mp4"></video>
       <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/8.avif" alt="">
-
-      <!-- Duplicate -->
+      <video muted loop playsinline autoplay preload="metadata"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/7.mp4" type="video/mp4"></video>
+      <!-- Bộ 2 (duplicate để loop) -->
       <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/1.avif" alt="" aria-hidden="true">
+      <video muted loop playsinline autoplay preload="metadata" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/5.mp4" type="video/mp4"></video>
       <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/4.avif" alt="" aria-hidden="true">
+      <video muted loop playsinline autoplay preload="metadata" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/2.mp4" type="video/mp4"></video>
       <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/6.webp" alt="" aria-hidden="true">
+      <video muted loop playsinline autoplay preload="metadata" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/3.mp4" type="video/mp4"></video>
       <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/8.avif" alt="" aria-hidden="true">
-
-    </div>
-
-    <!-- Row 2 -->
-    <div class="creative-rail rail-rtl">
-
-      <video muted loop playsinline autoplay preload="metadata">
-        <source src="https://tryholo.ai/rootPage/assets/featuresCarousel/5.mp4" type="video/mp4">
-      </video>
-
-      <video muted loop playsinline autoplay preload="metadata">
-        <source src="https://tryholo.ai/rootPage/assets/featuresCarousel/2.mp4" type="video/mp4">
-      </video>
-
-      <video muted loop playsinline autoplay preload="metadata">
-        <source src="https://tryholo.ai/rootPage/assets/featuresCarousel/3.mp4" type="video/mp4">
-      </video>
-
-      <video muted loop playsinline autoplay preload="metadata">
-        <source src="https://tryholo.ai/rootPage/assets/featuresCarousel/7.mp4" type="video/mp4">
-      </video>
-
-      <!-- Duplicate -->
-      <video muted loop playsinline autoplay preload="metadata" aria-hidden="true">
-        <source src="https://tryholo.ai/rootPage/assets/featuresCarousel/5.mp4" type="video/mp4">
-      </video>
-
-      <video muted loop playsinline autoplay preload="metadata" aria-hidden="true">
-        <source src="https://tryholo.ai/rootPage/assets/featuresCarousel/2.mp4" type="video/mp4">
-      </video>
-
-      <video muted loop playsinline autoplay preload="metadata" aria-hidden="true">
-        <source src="https://tryholo.ai/rootPage/assets/featuresCarousel/3.mp4" type="video/mp4">
-      </video>
-
-      <video muted loop playsinline autoplay preload="metadata" aria-hidden="true">
-        <source src="https://tryholo.ai/rootPage/assets/featuresCarousel/7.mp4" type="video/mp4">
-      </video>
-
+      <video muted loop playsinline autoplay preload="metadata" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/7.mp4" type="video/mp4"></video>
     </div>
 
   </div>
