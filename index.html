@@ -1468,84 +1468,46 @@
     observer.observe(el);
   });
 
-  // ── Lead Magnet Popup (7s delay, once per session, Google Sheets, New Tab) ───────────────
-  (function () {
-    'use strict';
+ // ── Lead Magnet Popup Submit Handler ──
+function handlePopupSubmit() {
+  var emailInput = document.getElementById('popup-email');
+  var email = emailInput.value;
+  var submitBtn = document.getElementById('popup-submit');
 
-    const SESSION_KEY = 'lm_popup_shown';
-    
-  // Tìm đoạn này và dán URL mới vào
+  // Kiểm tra email hợp lệ
+  if (!email || !email.includes('@')) {
+    emailInput.style.borderColor = 'rgba(239,68,68,.8)';
+    emailInput.style.boxShadow = '0 0 0 3px rgba(239,68,68,.12)';
+    emailInput.placeholder = 'Please enter a valid email address';
+    return;
+  }
 
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyFGmbfGsGmUZB4bw4g30mhoIC-y1IYv8C3Rd4aNAVioWBcO20dRXxz4F20yPdH0wAWCg/exec';
-    if (sessionStorage.getItem(SESSION_KEY)) return;
+  // Đổi chữ trên nút thành Đang gửi để khách biết
+  submitBtn.innerHTML = 'Sending... ⏳';
+  submitBtn.disabled = true;
 
-    const overlay   = document.getElementById('lm-overlay');
-    const closeBtn  = document.getElementById('lm-close');
-    const form      = document.getElementById('lm-form');
-    const emailInput = document.getElementById('lm-email');
-    const submitBtn = document.getElementById('lm-submit');
+  // Đóng gói dữ liệu
+  var formData = new FormData();
+  formData.append('email', email);
 
-    if (!overlay) return;
+  // Link Web App URL bạn lấy từ Google Apps Script
+  var scriptURL = 'https://script.google.com/macros/s/AKfycbwD4sCIHyH6XkCg0dODxgZ40WSXszHcPnSsp2F2dWjmUfkam_yCA4Tk-4-GSQYXpR2mhw/exec';
 
-    function openPopup() {
-      overlay.classList.add('lm-visible');
-      document.body.style.overflow = 'hidden';
-      if(emailInput) emailInput.focus();
-      sessionStorage.setItem(SESSION_KEY, '1'); 
-    }
-
-    function closePopup() {
-      overlay.classList.remove('lm-visible');
-      document.body.style.overflow = '';
-    }
-
-    const triggerTimer = setTimeout(openPopup, 7000);
-
-    if(closeBtn) closeBtn.addEventListener('click', closePopup);
-    if(overlay) overlay.addEventListener('click', function (e) {
-      if (e.target === overlay) closePopup();
-    });
-    
-    // Close: Escape key
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && overlay.classList.contains('lm-visible')) closePopup();
-    });
-
-    if(form) form.addEventListener('submit', async function (e) {
-      e.preventDefault(); 
-
-      const email = emailInput.value.trim();
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-      if (!emailRegex.test(email)) {
-        emailInput.classList.remove('lm-invalid');      
-        void emailInput.offsetWidth;                    
-        emailInput.classList.add('lm-invalid');
-        emailInput.focus();
-        emailInput.addEventListener('animationend', function handler() {
-          emailInput.classList.remove('lm-invalid');
-          emailInput.removeEventListener('animationend', handler);
-        });
-        return;
-      }
-
-      submitBtn.textContent  = 'Processing...';
-      submitBtn.style.filter = 'brightness(0.85)';
-      submitBtn.disabled     = true;
-      emailInput.disabled    = true;
-
-      try {
-        const formData = new FormData(form);
-        await fetch(GOOGLE_SCRIPT_URL, { 
-          method: 'POST', 
-          body: formData, 
-          mode: 'no-cors' 
-        });
-      } catch (error) {
-        console.error('Lỗi khi gửi form:', error);
-      } finally {
-        submitBtn.textContent = 'Success! Opening...';
-        submitBtn.style.background = 'linear-gradient(135deg, #34d399 0%, #059669 100%)';
+  // Gửi data về Google Sheets (Đã fix lỗi CORS)
+  fetch(scriptURL, { 
+      method: 'POST', 
+      body: formData,
+      mode: 'no-cors' 
+    })
+    .then(response => {
+      // Ẩn form, hiện thông báo thành công
+      document.getElementById('popup-form').style.display = 'none';
+      document.getElementById('popup-success').style.display = 'block';
+    })
+    .catch(error => {
+      console.error('Error!', error.message);
+      submitBtn.innerHTML = 'Error! Try again.';
+      submitBtn.disabled = false;
         
         setTimeout(function () {
           window.open('https://tryholo.ai/', '_blank');
