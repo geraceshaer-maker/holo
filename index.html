@@ -294,12 +294,15 @@
   .rail-rtl { animation: railRTL 32s linear infinite; }
   .rail-ltr:hover, .rail-rtl:hover { animation-play-state: paused; }
 
-  .creative-showcase { display: flex; flex-direction: column; gap: 12px; }
-  .creative-mask {
+  .creative-showcase {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     overflow: hidden;
     -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
     mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
   }
+  .creative-mask { display: contents; }
   .creative-rail {
     display: flex;
     flex-direction: row;
@@ -606,7 +609,7 @@
     <button id="lm-close">✕</button>
     <span id="lm-emoji">🎁</span>
     <h2 id="lm-headline"><span class="lm-grad">Holo AI 70% OFF</span></h2>
-    <p id="lm-sub">Enter your email to claim your 70% discount and instantly receive our 100+ High-Converting Marketing Prompt library.</p>
+    <p id="lm-sub">Enter your email to claim your 70% discount!</p>
    <form id="lm-form">
   <!-- THUỘC TÍNH name="email" LÀ BẮT BUỘC ĐỂ ỨNG DỤNG NHẬN ĐƯỢC -->
  <input type="email" name="email" id="lm-email" placeholder="Enter your email address..." required />
@@ -695,7 +698,7 @@
       <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
         <div style="width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(168,85,247,0.15) 0%,rgba(34,211,238,0.08) 50%,transparent 70%);filter:blur(40px);animation:corePulse 4s ease-in-out infinite;"></div>
       </div>
-<div class="globe-scene absolute inset-0 m-auto pointer-events-none">
+<div class="globe-scene pointer-events-none" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1;">
   <div class="g-ring g-ring-1">
     <span class="g-node text-cyan-400"></span>
   </div>
@@ -870,7 +873,7 @@
 <!-- ======================================================
      TRUST LOGO TICKER (existing)
 ====================================================== -->
-  <p class="text-center text-zinc-500 text-xs uppercase tracking-[0.2em] mb-5 font-medium" style="font-family:'Montserrat',sans-serif">Integrates perfectly with</p>
+  <p class="text-center text-zinc-500 text-xs uppercase tracking-[0.2em] mb-5 font-medium mt-16" style="font-family:'Montserrat',sans-serif">Integrates perfectly with</p>
   <div class="marquee-wrap">
     <div class="marquee-track">
       <span class="marquee-item">
