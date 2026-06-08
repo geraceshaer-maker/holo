@@ -666,13 +666,29 @@
     </div>
 
     <!-- Right: Hero Visual with video + Holo robot -->
-    <div class="hero-visual relative w-full flex items-center justify-center" style="min-height:460px;" aria-hidden="true">
+    <div class="hero-visual relative w-full flex items-center justify-center overflow-visible"
 
       <!-- Ambient glow behind everything -->
       <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
         <div style="width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(168,85,247,0.15) 0%,rgba(34,211,238,0.08) 50%,transparent 70%);filter:blur(40px);animation:corePulse 4s ease-in-out infinite;"></div>
       </div>
+<div class="globe-scene absolute inset-0 m-auto pointer-events-none">
+  <div class="g-ring g-ring-1">
+    <span class="g-node text-cyan-400"></span>
+  </div>
 
+  <div class="g-ring g-ring-2">
+    <span class="g-node text-purple-400"></span>
+  </div>
+
+  <div class="g-ring g-ring-3">
+    <span class="g-node text-emerald-400"></span>
+  </div>
+
+  <div class="g-ring g-ring-4">
+    <span class="g-node text-pink-400"></span>
+  </div>
+</div>
       <!-- Robot mascot (3D video from tryholo.ai) -->
       <div style="position:relative;z-index:10;animation:heroFloat 5s ease-in-out infinite;">
         <video
@@ -760,47 +776,74 @@
 
   <!-- Auto-scrolling image rail – single combined row like tryholo.ai -->
   <div style="overflow:hidden;-webkit-mask-image:linear-gradient(to right,transparent 0%,black 8%,black 92%,transparent 100%);mask-image:linear-gradient(to right,transparent 0%,black 8%,black 92%,transparent 100%);">
-    <!-- Row 1: left to right – images -->
-    <div class="creative-rail rail-ltr" style="display:flex;gap:16px;width:max-content;margin-bottom:16px;">
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/1.avif" alt="AI marketing creative" style="height:200px;width:auto;border-radius:14px;object-fit:cover;flex-shrink:0;" onerror="this.style.display='none'">
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/4.avif" alt="AI marketing creative" style="height:200px;width:auto;border-radius:14px;object-fit:cover;flex-shrink:0;" onerror="this.style.display='none'">
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/6.webp" alt="AI marketing creative" style="height:200px;width:auto;border-radius:14px;object-fit:cover;flex-shrink:0;" onerror="this.style.display='none'">
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/8.avif" alt="AI marketing creative" style="height:200px;width:auto;border-radius:14px;object-fit:cover;flex-shrink:0;" onerror="this.style.display='none'">
-      <!-- Duplicate for seamless loop -->
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/1.avif" alt="" style="height:200px;width:auto;border-radius:14px;object-fit:cover;flex-shrink:0;" aria-hidden="true" onerror="this.style.display='none'">
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/4.avif" alt="" style="height:200px;width:auto;border-radius:14px;object-fit:cover;flex-shrink:0;" aria-hidden="true" onerror="this.style.display='none'">
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/6.webp" alt="" style="height:200px;width:auto;border-radius:14px;object-fit:cover;flex-shrink:0;" aria-hidden="true" onerror="this.style.display='none'">
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/8.avif" alt="" style="height:200px;width:auto;border-radius:14px;object-fit:cover;flex-shrink:0;" aria-hidden="true" onerror="this.style.display='none'">
+  <div class="creative-showcase">
+
+  <div class="creative-mask">
+
+    <!-- Row 1 -->
+    <div class="creative-rail rail-ltr">
+
+      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/1.avif" alt="">
+      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/4.avif" alt="">
+      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/6.webp" alt="">
+      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/8.avif" alt="">
+
+      <!-- Duplicate -->
+      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/1.avif" alt="" aria-hidden="true">
+      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/4.avif" alt="" aria-hidden="true">
+      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/6.webp" alt="" aria-hidden="true">
+      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/8.avif" alt="" aria-hidden="true">
+
     </div>
-    <!-- Row 2: right to left – video previews -->
-    <div class="creative-rail rail-rtl" style="display:flex;gap:16px;width:max-content;">
-      <video muted loop playsinline autoplay style="height:200px;width:auto;border-radius:14px;object-fit:cover;flex-shrink:0;" preload="metadata">
+
+    <!-- Row 2 -->
+    <div class="creative-rail rail-rtl">
+
+      <video muted loop playsinline autoplay preload="metadata">
         <source src="https://tryholo.ai/rootPage/assets/featuresCarousel/5.mp4" type="video/mp4">
       </video>
-      <video muted loop playsinline autoplay style="height:200px;width:auto;border-radius:14px;object-fit:cover;flex-shrink:0;" preload="metadata">
+
+      <video muted loop playsinline autoplay preload="metadata">
         <source src="https://tryholo.ai/rootPage/assets/featuresCarousel/2.mp4" type="video/mp4">
       </video>
-      <video muted loop playsinline autoplay style="height:200px;width:auto;border-radius:14px;object-fit:cover;flex-shrink:0;" preload="metadata">
+
+      <video muted loop playsinline autoplay preload="metadata">
         <source src="https://tryholo.ai/rootPage/assets/featuresCarousel/3.mp4" type="video/mp4">
       </video>
-      <video muted loop playsinline autoplay style="height:200px;width:auto;border-radius:14px;object-fit:cover;flex-shrink:0;" preload="metadata">
+
+      <video muted loop playsinline autoplay preload="metadata">
         <source src="https://tryholo.ai/rootPage/assets/featuresCarousel/7.mp4" type="video/mp4">
       </video>
-      <!-- Duplicates for seamless loop -->
-      <video muted loop playsinline autoplay style="height:200px;width:auto;border-radius:14px;object-fit:cover;flex-shrink:0;" preload="metadata" aria-hidden="true">
+
+      <!-- Duplicate -->
+      <video muted loop playsinline autoplay preload="metadata" aria-hidden="true">
         <source src="https://tryholo.ai/rootPage/assets/featuresCarousel/5.mp4" type="video/mp4">
       </video>
-      <video muted loop playsinline autoplay style="height:200px;width:auto;border-radius:14px;object-fit:cover;flex-shrink:0;" preload="metadata" aria-hidden="true">
+
+      <video muted loop playsinline autoplay preload="metadata" aria-hidden="true">
         <source src="https://tryholo.ai/rootPage/assets/featuresCarousel/2.mp4" type="video/mp4">
       </video>
-      <video muted loop playsinline autoplay style="height:200px;width:auto;border-radius:14px;object-fit:cover;flex-shrink:0;" preload="metadata" aria-hidden="true">
+
+      <video muted loop playsinline autoplay preload="metadata" aria-hidden="true">
         <source src="https://tryholo.ai/rootPage/assets/featuresCarousel/3.mp4" type="video/mp4">
       </video>
-      <video muted loop playsinline autoplay style="height:200px;width:auto;border-radius:14px;object-fit:cover;flex-shrink:0;" preload="metadata" aria-hidden="true">
+
+      <video muted loop playsinline autoplay preload="metadata" aria-hidden="true">
         <source src="https://tryholo.ai/rootPage/assets/featuresCarousel/7.mp4" type="video/mp4">
       </video>
+
     </div>
+
   </div>
+
+  <div class="text-center mt-10">
+    <a href="https://tryholo.ai/" target="_blank"
+      class="grad-btn text-white font-bold text-sm px-8 py-3.5 rounded-2xl shadow-lg shadow-purple-500/25 inline-block">
+      Launch 10x More Content — 70% Off →
+    </a>
+  </div>
+
+</div>
 
   <div class="text-center mt-10">
     <a href="https://tryholo.ai/" target="_blank" class="grad-btn text-white font-bold text-sm px-8 py-3.5 rounded-2xl shadow-lg shadow-purple-500/25 inline-block">
