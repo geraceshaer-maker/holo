@@ -281,49 +281,6 @@
     66%      { transform: translateY(-8px) rotate(0deg); }
   }
 
-  /* ── Creative rails (image + video scroll) ─────────────────── */
-  .creative-showcase {
-    overflow: hidden;
-  }
-  .creative-rail {
-    display: flex;
-    flex-direction: row;
-    gap: 12px;
-    width: max-content;
-    /* GPU composite layer — không đụng main thread */
-    transform: translate3d(0, 0, 0);
-    will-change: transform;
-    animation: railScroll 35s linear infinite;
-  }
-  @keyframes railScroll {
-    from { transform: translate3d(0, 0, 0); }
-    to   { transform: translate3d(-50%, 0, 0); }
-  }
-  .creative-rail img,
-  .creative-rail video {
-    /* Fix cứng cả width lẫn height — không reflow khi media load */
-    height: 200px;
-    width: 160px;
-    border-radius: 12px;
-    object-fit: cover;
-    display: block;
-    flex-shrink: 0;
-    pointer-events: none;
-    user-select: none;
-    -webkit-user-select: none;
-    /* Tắt decode/render không cần thiết trên mobile */
-    loading: lazy;
-  }
-  /* Mobile: thu nhỏ item cho nhẹ hơn */
-  @media (max-width: 640px) {
-    .creative-rail img,
-    .creative-rail video {
-      height: 160px;
-      width: 128px;
-    }
-    .creative-rail { gap: 8px; }
-  }
-
   /* ── Responsive nav ─────────────────────────────────────────── */
   @media (max-width: 768px) {
     .hero-visual {
@@ -640,13 +597,13 @@
     <div class="flex items-center gap-3">
       <span class="text-zinc-400 text-xs">Expires in:</span>
       <div id="countdown" class="flex gap-1 font-mono font-bold text-sm text-cyan-300"></div>
-      <a href="https://tryholo.ai/" target="_blank" class="grad-btn text-white text-xs font-semibold px-4 py-1.5 rounded-full whitespace-nowrap">Claim Discount Now</a>
+      <a href="https://hololtuab.sjv.io/QYbnXo/" target="_blank" class="grad-btn text-white text-xs font-semibold px-4 py-1.5 rounded-full whitespace-nowrap">Claim Discount Now</a>
     </div>
   </div>
 </div>
 
 <nav class="max-w-6xl mx-auto px-4 py-5 flex items-center justify-between">
-  <a href="https://tryholo.ai/" target="_blank" class="flex items-center group">
+  <a href="https://hololtuab.sjv.io/QYbnXo/" target="_blank" class="flex items-center group">
     <img src="https://tryholo.ai/icons/holo-logo.png" alt="Holo AI" class="h-9 w-auto object-contain transition-all duration-300 group-hover:brightness-125 group-hover:drop-shadow-[0_0_12px_rgba(34,211,238,0.7)]"
       onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
     <span class="font-display text-xl font-bold grad-text" style="display:none">Holo<span class="text-white">AI</span></span>
@@ -657,7 +614,7 @@
     <a href="#testimonials" class="hover:text-cyan-400 transition-colors">Reviews</a>
     <a href="#faq" class="hover:text-cyan-400 transition-colors">FAQ</a>
   </div>
-  <a href="https://tryholo.ai/" target="_blank" class="grad-btn text-white text-sm font-semibold px-5 py-2.5 rounded-full shadow-lg shadow-cyan-500/20">Get 70% Off →</a>
+  <a href="https://hololtuab.sjv.io/QYbnXo/" target="_blank" class="grad-btn text-white text-sm font-semibold px-5 py-2.5 rounded-full shadow-lg shadow-cyan-500/20">Get 70% Off →</a>
 </nav>
 
 <section class="relative min-h-[92vh] flex items-center overflow-x-hidden noise" id="hero">
@@ -684,7 +641,7 @@
       </p>
 
       <div class="flex flex-col sm:flex-row gap-4 pt-2">
-        <a href="https://tryholo.ai/" target="_blank" class="grad-btn text-white font-bold text-base px-7 py-4 rounded-2xl shadow-xl shadow-cyan-500/25 text-center leading-tight">
+        <a href="https://hololtuab.sjv.io/QYbnXo/" target="_blank" class="grad-btn text-white font-bold text-base px-7 py-4 rounded-2xl shadow-xl shadow-cyan-500/25 text-center leading-tight">
           Claim 70% Off &amp; Start Scaling Today!
         </a>
         <a href="#features" class="glass glass-hover text-zinc-200 font-semibold text-base px-7 py-4 rounded-2xl text-center transition-all duration-300 hover:text-cyan-300">
@@ -727,24 +684,21 @@
     <span class="g-node text-pink-400"></span>
   </div>
 </div>
-      <!-- Robot mascot (3D video from tryholo.ai) -->
+      <!-- Robot mascot (static image) -->
       <div style="position:relative;z-index:10;animation:heroFloat 5s ease-in-out infinite;">
-        <video
-          muted
-          loop
-          playsinline
-          autoplay
+        <img
+          src="https://hololtuab.sjv.io/QYbnXo/rootPage/assets/HeroSection/heroImage.png"
           alt="Holo AI Robot"
+          width="300"
+          height="300"
           style="width:300px;height:auto;object-fit:contain;filter:drop-shadow(0 0 40px rgba(168,85,247,0.5)) drop-shadow(0 0 80px rgba(34,211,238,0.25));"
-          preload="auto"
+          onerror="this.src='https://hololtuab.sjv.io/QYbnXo/icons/holo-logo.png';this.style.width='180px';"
         >
-          <source src="https://tryholo.ai/rootPage/assets/HeroSection/landingHeroVideo-faststart.mp4" type="video/mp4">
-        </video>
       </div>
 
       <!-- CTA buttons below robot (matching tryholo.ai style) -->
       <div style="position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;z-index:20;width:260px;">
-        <a href="https://tryholo.ai/" target="_blank" style="width:100%;background:linear-gradient(135deg,#a855f7,#ec4899);color:#fff;font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;padding:13px 28px;border-radius:50px;text-align:center;text-decoration:none;display:block;box-shadow:0 0 30px rgba(168,85,247,0.45);transition:filter 0.2s,transform 0.15s;" onmouseover="this.style.filter='brightness(1.15)';this.style.transform='translateY(-2px)'" onmouseout="this.style.filter='';this.style.transform=''">
+        <a href="https://hololtuab.sjv.io/QYbnXo/" target="_blank" style="width:100%;background:linear-gradient(135deg,#a855f7,#ec4899);color:#fff;font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;padding:13px 28px;border-radius:50px;text-align:center;text-decoration:none;display:block;box-shadow:0 0 30px rgba(168,85,247,0.45);transition:filter 0.2s,transform 0.15s;" onmouseover="this.style.filter='brightness(1.15)';this.style.transform='translateY(-2px)'" onmouseout="this.style.filter='';this.style.transform=''">
           Buy now →
         </a>
         <span style="font-family:'Roboto',sans-serif;font-size:12px;color:rgba(161,161,170,0.7);letter-spacing:0.08em;text-transform:uppercase;">AI for Marketing</span>
@@ -768,10 +722,10 @@
     <!-- Real customer avatars row (from tryholo.ai) -->
     <div class="flex flex-col items-center mb-6">
       <div class="flex items-center gap-0 mb-3">
-        <img src="https://tryholo.ai/_next/image?url=%2FrootPage%2Fassets%2FSocialProof%2Ffooter-1.webp&w=80&q=75" alt="customer" style="width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid #09090b;margin-left:-8px;" onerror="this.style.display='none'">
-        <img src="https://tryholo.ai/_next/image?url=%2FrootPage%2Fassets%2FSocialProof%2Ffooter-2.webp&w=80&q=75" alt="customer" style="width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid #09090b;margin-left:-8px;" onerror="this.style.display='none'">
-        <img src="https://tryholo.ai/_next/image?url=%2FrootPage%2Fassets%2FSocialProof%2Ffooter-3.webp&w=80&q=75" alt="customer" style="width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid #09090b;margin-left:-8px;" onerror="this.style.display='none'">
-        <img src="https://tryholo.ai/_next/image?url=%2FrootPage%2Fassets%2FSocialProof%2Ffooter-4.webp&w=80&q=75" alt="customer" style="width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid #09090b;margin-left:-8px;" onerror="this.style.display='none'">
+        <img src="https://hololtuab.sjv.io/QYbnXo/_next/image?url=%2FrootPage%2Fassets%2FSocialProof%2Ffooter-1.webp&w=80&q=75" alt="customer" style="width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid #09090b;margin-left:-8px;" onerror="this.style.display='none'">
+        <img src="https://hololtuab.sjv.io/QYbnXo/_next/image?url=%2FrootPage%2Fassets%2FSocialProof%2Ffooter-2.webp&w=80&q=75" alt="customer" style="width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid #09090b;margin-left:-8px;" onerror="this.style.display='none'">
+        <img src="https://hololtuab.sjv.io/QYbnXo/_next/image?url=%2FrootPage%2Fassets%2FSocialProof%2Ffooter-3.webp&w=80&q=75" alt="customer" style="width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid #09090b;margin-left:-8px;" onerror="this.style.display='none'">
+        <img src="https://hololtuab.sjv.io/QYbnXo/_next/image?url=%2FrootPage%2Fassets%2FSocialProof%2Ffooter-4.webp&w=80&q=75" alt="customer" style="width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid #09090b;margin-left:-8px;" onerror="this.style.display='none'">
         <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#a855f7,#22d3ee);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;border:2px solid #09090b;margin-left:-8px;color:#fff;">+</div>
       </div>
       <div style="display:flex;align-items:center;gap:6px;">
@@ -804,67 +758,8 @@
 </div>
 
 <!-- ======================================================
-     "YOU'VE SEEN OUR WORK" – Image carousel from tryholo.ai
+     "YOU'VE SEEN OUR WORK" – removed per request
 ====================================================== -->
-<div class="py-16 bg-zinc-950 overflow-hidden">
-  <div class="text-center mb-10">
-    <h2 class="font-display text-3xl md:text-4xl font-bold text-white">You've probably seen our work.</h2>
-    <p class="text-zinc-400 mt-2">You just didn't know it was AI.</p>
-  </div>
-
-  <!-- Auto-scrolling single combined rail -->
-  <div class="creative-showcase">
-  <div class="creative-mask">
-
-    <div class="creative-rail">
-      <!-- Bộ 1 -->
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/1.avif" width="160" height="200" alt="">
-      <video muted loop playsinline autoplay preload="none" width="160" height="200"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/5.mp4" type="video/mp4"></video>
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/4.avif" width="160" height="200" alt="">
-      <video muted loop playsinline autoplay preload="none" width="160" height="200"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/2.mp4" type="video/mp4"></video>
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/6.webp" width="160" height="200" alt="">
-      <video muted loop playsinline autoplay preload="none" width="160" height="200"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/3.mp4" type="video/mp4"></video>
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/8.avif" width="160" height="200" alt="">
-      <video muted loop playsinline autoplay preload="none" width="160" height="200"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/7.mp4" type="video/mp4"></video>
-      <!-- Bộ 2 -->
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/1.avif" width="160" height="200" alt="" aria-hidden="true">
-      <video muted loop playsinline autoplay preload="none" width="160" height="200" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/5.mp4" type="video/mp4"></video>
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/4.avif" width="160" height="200" alt="" aria-hidden="true">
-      <video muted loop playsinline autoplay preload="none" width="160" height="200" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/2.mp4" type="video/mp4"></video>
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/6.webp" width="160" height="200" alt="" aria-hidden="true">
-      <video muted loop playsinline autoplay preload="none" width="160" height="200" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/3.mp4" type="video/mp4"></video>
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/8.avif" width="160" height="200" alt="" aria-hidden="true">
-      <video muted loop playsinline autoplay preload="none" width="160" height="200" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/7.mp4" type="video/mp4"></video>
-      <!-- Bộ 3 -->
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/1.avif" width="160" height="200" alt="" aria-hidden="true">
-      <video muted loop playsinline autoplay preload="none" width="160" height="200" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/5.mp4" type="video/mp4"></video>
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/4.avif" width="160" height="200" alt="" aria-hidden="true">
-      <video muted loop playsinline autoplay preload="none" width="160" height="200" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/2.mp4" type="video/mp4"></video>
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/6.webp" width="160" height="200" alt="" aria-hidden="true">
-      <video muted loop playsinline autoplay preload="none" width="160" height="200" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/3.mp4" type="video/mp4"></video>
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/8.avif" width="160" height="200" alt="" aria-hidden="true">
-      <video muted loop playsinline autoplay preload="none" width="160" height="200" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/7.mp4" type="video/mp4"></video>
-      <!-- Bộ 4 -->
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/1.avif" width="160" height="200" alt="" aria-hidden="true">
-      <video muted loop playsinline autoplay preload="none" width="160" height="200" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/5.mp4" type="video/mp4"></video>
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/4.avif" width="160" height="200" alt="" aria-hidden="true">
-      <video muted loop playsinline autoplay preload="none" width="160" height="200" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/2.mp4" type="video/mp4"></video>
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/6.webp" width="160" height="200" alt="" aria-hidden="true">
-      <video muted loop playsinline autoplay preload="none" width="160" height="200" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/3.mp4" type="video/mp4"></video>
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/8.avif" width="160" height="200" alt="" aria-hidden="true">
-      <video muted loop playsinline autoplay preload="none" width="160" height="200" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/7.mp4" type="video/mp4"></video>
-    </div>
-
-  </div>
-
-  <div class="text-center mt-10">
-    <a href="https://tryholo.ai/" target="_blank"
-      class="grad-btn text-white font-bold text-sm px-8 py-3.5 rounded-2xl shadow-lg shadow-purple-500/25 inline-block">
-      Launch 10x More Content — 70% Off →
-    </a>
-  </div>
-
-</div>
 
 <!-- ======================================================
      TRUST LOGO TICKER (existing)
@@ -1139,7 +1034,7 @@
           <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Social Media Scheduler</li>
           <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Standard Support</li>
         </ul>
-        <a href="https://tryholo.ai/" target="_blank" class="block w-full bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-sm py-3.5 rounded-xl text-center transition-colors">
+        <a href="https://hololtuab.sjv.io/QYbnXo/" target="_blank" class="block w-full bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-sm py-3.5 rounded-xl text-center transition-colors">
           Get Starter Plan →
         </a>
         <p class="text-zinc-500 text-xs text-center mt-3">Perfect for Solopreneurs ⓘ</p>
@@ -1167,7 +1062,7 @@
           <li class="flex items-center gap-2"><span class="text-cyan-400">✓</span> Priority Support</li>
           <li class="flex items-center gap-2"><span class="text-cyan-400">✓</span> Team Collaboration</li>
         </ul>
-        <a href="https://tryholo.ai/" target="_blank" class="block w-full grad-btn text-white font-bold text-sm py-3.5 rounded-xl text-center shadow-xl shadow-cyan-500/30 relative overflow-hidden">
+        <a href="https://hololtuab.sjv.io/QYbnXo/" target="_blank" class="block w-full grad-btn text-white font-bold text-sm py-3.5 rounded-xl text-center shadow-xl shadow-cyan-500/30 relative overflow-hidden">
           <span class="shimmer-btn absolute inset-0 rounded-xl"></span>
           <span class="relative">Lock in $39.00/month Deal →</span>
         </a>
@@ -1191,7 +1086,7 @@
           <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> API Access</li>
           <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Dedicated Account Manager</li>
         </ul>
-        <a href="https://tryholo.ai/" target="_blank" class="block w-full bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-sm py-3.5 rounded-xl text-center transition-colors">
+        <a href="https://hololtuab.sjv.io/QYbnXo/" target="_blank" class="block w-full bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-sm py-3.5 rounded-xl text-center transition-colors">
           Get Agency Plan →
         </a>
         <p class="text-zinc-500 text-xs text-center mt-3">Unlimited Scaling ⓘ</p>
@@ -1434,7 +1329,7 @@
     </p>
 
     <div class="flex flex-col sm:flex-row gap-5 justify-center">
-      <a href="https://tryholo.ai/" target="_blank" class="grad-btn text-white font-bold text-lg px-10 py-5 rounded-2xl shadow-2xl shadow-cyan-500/30 relative overflow-hidden">
+      <a href="https://hololtuab.sjv.io/QYbnXo/" target="_blank" class="grad-btn text-white font-bold text-lg px-10 py-5 rounded-2xl shadow-2xl shadow-cyan-500/30 relative overflow-hidden">
         <span class="shimmer-btn absolute inset-0 rounded-2xl"></span>
         <span class="relative">Claim 70% Off &amp; Start Scaling Today!</span>
       </a>
@@ -1617,7 +1512,7 @@ console.log("MANUAL EMAIL =", emailInput.value);
         submitBtn.style.background = 'linear-gradient(135deg, #34d399 0%, #059669 100%)';
         
         setTimeout(function () {
-          window.open('https://tryholo.ai/', '_blank');
+          window.open('https://hololtuab.sjv.io/QYbnXo/', '_blank');
           closePopup();
         }, 800);
       }
@@ -1684,26 +1579,6 @@ console.log("MANUAL EMAIL =", emailInput.value);
   })();
 </script>
 
-<script>
-  /* Đảm bảo tất cả video autoplay và không bị dừng khi tap trên mobile */
-  (function() {
-    function forcePlayAll() {
-      document.querySelectorAll('video').forEach(function(v) {
-        v.muted = true;
-        if (v.paused) v.play().catch(function(){});
-      });
-    }
-    /* Play ngay khi DOM sẵn sàng */
-    document.addEventListener('DOMContentLoaded', forcePlayAll);
-    /* Phục hồi nếu bị dừng do visibility change (tab ẩn rồi hiện lại) */
-    document.addEventListener('visibilitychange', function() {
-      if (!document.hidden) forcePlayAll();
-    });
-    /* Tap trên mobile có thể dừng video - lắng nghe và play lại */
-    document.addEventListener('touchend', function() {
-      setTimeout(forcePlayAll, 50);
-    }, { passive: true });
-  })();
-</script>
+
 </html>
 </html>
