@@ -282,15 +282,6 @@
   }
 
   /* ── Creative rails (image + video scroll) ─────────────────── */
-  @keyframes railLTR {
-    0%   { transform: translate3d(0, 0, 0); }
-    100% { transform: translate3d(-50%, 0, 0); }
-  }
-  .rail-ltr {
-    animation: railLTR 40s linear infinite;
-    will-change: transform;
-  }
-
   .creative-showcase {
     display: flex;
     flex-direction: column;
@@ -303,6 +294,7 @@
     flex-direction: row;
     gap: 12px;
     width: max-content;
+    will-change: transform;
     backface-visibility: hidden;
   }
   .creative-rail img,
@@ -1698,6 +1690,72 @@ console.log("MANUAL EMAIL =", emailInput.value);
     document.addEventListener('touchend', function() {
       setTimeout(forcePlayAll, 50);
     }, { passive: true });
+  })();
+</script>
+
+<script>
+  /* Rail cuộn pixel-perfect — đo width thực, loop không nhảy */
+  (function() {
+    function initRail(rail) {
+      var items = Array.from(rail.children);
+      var half = Math.floor(items.length / 2);
+      /* Tính chiều rộng chính xác của 1 bộ (nửa đầu) */
+      function getSetWidth() {
+        var w = 0;
+        for (var i = 0; i < half; i++) {
+          var r = items[i].getBoundingClientRect();
+          w += r.width;
+        }
+        /* Cộng thêm gap giữa các item (12px * số gap trong 1 bộ) */
+        w += 12 * (half - 1);
+        /* Cộng gap cuối cùng sang bộ tiếp theo */
+        w += 12;
+        return w;
+      }
+
+      var setWidth = 0;
+      var pos = 0;
+      var speed = 0.6; /* px/frame — ~36px/s ở 60fps */
+      var raf;
+
+      function tick() {
+        pos += speed;
+        if (pos >= setWidth) pos -= setWidth;
+        rail.style.transform = 'translate3d(-' + pos + 'px, 0, 0)';
+        raf = requestAnimationFrame(tick);
+      }
+
+      function start() {
+        setWidth = getSetWidth();
+        if (setWidth > 0) {
+          cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(tick);
+        }
+      }
+
+      /* Đợi ảnh/video load xong rồi mới đo */
+      var imgs = rail.querySelectorAll('img');
+      var loaded = 0;
+      if (imgs.length === 0) {
+        start();
+      } else {
+        imgs.forEach(function(img) {
+          if (img.complete) { loaded++; if (loaded === imgs.length) start(); }
+          else img.addEventListener('load', function() { loaded++; if (loaded === imgs.length) start(); });
+        });
+        /* Fallback nếu load quá lâu */
+        setTimeout(start, 800);
+      }
+
+      /* Resize: đo lại */
+      window.addEventListener('resize', function() {
+        setWidth = getSetWidth();
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.rail-ltr').forEach(initRail);
+    });
   })();
 </script>
 </html>
