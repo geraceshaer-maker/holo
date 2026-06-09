@@ -283,11 +283,13 @@
 
   /* ── Creative rails (image + video scroll) ─────────────────── */
   @keyframes railLTR {
-    0%   { transform: translateX(-25%); }
-    100% { transform: translateX(-75%); }
+    0%   { transform: translate3d(-25%, 0, 0); }
+    100% { transform: translate3d(-75%, 0, 0); }
   }
-  .rail-ltr { animation: railLTR 60s linear infinite; }
-  .rail-ltr:hover { animation-play-state: paused; }
+  .rail-ltr {
+    animation: railLTR 80s linear infinite;
+    will-change: transform;
+  }
 
   .creative-showcase {
     display: flex;
@@ -301,6 +303,7 @@
     flex-direction: row;
     gap: 12px;
     width: max-content;
+    backface-visibility: hidden;
   }
   .creative-rail img,
   .creative-rail video {
@@ -311,11 +314,22 @@
     object-fit: cover;
     display: block;
     flex-shrink: 0;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
   }
 
   /* ── Responsive nav ─────────────────────────────────────────── */
   @media (max-width: 768px) {
-    .hero-visual { display: block; margin-top: 2rem; min-height: 380px !important; }
+    .hero-visual {
+      display: flex !important;
+      margin-top: 2rem;
+      min-height: 360px !important;
+      overflow: visible !important;
+    }
+    .hero-visual video {
+      width: 220px !important;
+    }
   }
   .shimmer-btn {
     background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.12) 50%, transparent 100%);
@@ -641,7 +655,7 @@
   <a href="https://tryholo.ai/" target="_blank" class="grad-btn text-white text-sm font-semibold px-5 py-2.5 rounded-full shadow-lg shadow-cyan-500/20">Get 70% Off →</a>
 </nav>
 
-<section class="relative min-h-[92vh] flex items-center overflow-hidden noise" id="hero">
+<section class="relative min-h-[92vh] flex items-center overflow-x-hidden noise" id="hero">
   <div class="absolute inset-0 pointer-events-none">
     <div class="absolute top-[-10%] left-[-5%] w-[500px] h-[500px] rounded-full bg-cyan-500/10 blur-[120px]"></div>
     <div class="absolute bottom-[-10%] right-[-5%] w-[500px] h-[500px] rounded-full bg-purple-600/10 blur-[120px]"></div>
@@ -1647,5 +1661,25 @@ console.log("MANUAL EMAIL =", emailInput.value);
   })();
 </script>
 
-</body>
+<script>
+  /* Đảm bảo tất cả video autoplay và không bị dừng khi tap trên mobile */
+  (function() {
+    function forcePlayAll() {
+      document.querySelectorAll('video').forEach(function(v) {
+        v.muted = true;
+        if (v.paused) v.play().catch(function(){});
+      });
+    }
+    /* Play ngay khi DOM sẵn sàng */
+    document.addEventListener('DOMContentLoaded', forcePlayAll);
+    /* Phục hồi nếu bị dừng do visibility change (tab ẩn rồi hiện lại) */
+    document.addEventListener('visibilitychange', function() {
+      if (!document.hidden) forcePlayAll();
+    });
+    /* Tap trên mobile có thể dừng video - lắng nghe và play lại */
+    document.addEventListener('touchend', function() {
+      setTimeout(forcePlayAll, 50);
+    }, { passive: true });
+  })();
+</script>
 </html>
