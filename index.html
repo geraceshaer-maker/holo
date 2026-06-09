@@ -283,32 +283,45 @@
 
   /* ── Creative rails (image + video scroll) ─────────────────── */
   .creative-showcase {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
     overflow: hidden;
   }
-  .creative-mask { display: contents; }
   .creative-rail {
     display: flex;
     flex-direction: row;
     gap: 12px;
     width: max-content;
+    /* GPU composite layer — không đụng main thread */
+    transform: translate3d(0, 0, 0);
     will-change: transform;
-    backface-visibility: hidden;
+    animation: railScroll 35s linear infinite;
+  }
+  @keyframes railScroll {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(-50%, 0, 0); }
   }
   .creative-rail img,
   .creative-rail video {
-    height: 220px;
-    width: auto;
-    max-width: none;
-    border-radius: 14px;
+    /* Fix cứng cả width lẫn height — không reflow khi media load */
+    height: 200px;
+    width: 160px;
+    border-radius: 12px;
     object-fit: cover;
     display: block;
     flex-shrink: 0;
     pointer-events: none;
     user-select: none;
     -webkit-user-select: none;
+    /* Tắt decode/render không cần thiết trên mobile */
+    loading: lazy;
+  }
+  /* Mobile: thu nhỏ item cho nhẹ hơn */
+  @media (max-width: 640px) {
+    .creative-rail img,
+    .creative-rail video {
+      height: 160px;
+      width: 128px;
+    }
+    .creative-rail { gap: 8px; }
   }
 
   /* ── Responsive nav ─────────────────────────────────────────── */
@@ -803,43 +816,43 @@
   <div class="creative-showcase">
   <div class="creative-mask">
 
-    <div class="creative-rail rail-ltr">
+    <div class="creative-rail">
       <!-- Bộ 1 -->
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/1.avif" alt="">
-      <video muted loop playsinline autoplay preload="metadata"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/5.mp4" type="video/mp4"></video>
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/4.avif" alt="">
-      <video muted loop playsinline autoplay preload="metadata"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/2.mp4" type="video/mp4"></video>
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/6.webp" alt="">
-      <video muted loop playsinline autoplay preload="metadata"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/3.mp4" type="video/mp4"></video>
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/8.avif" alt="">
-      <video muted loop playsinline autoplay preload="metadata"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/7.mp4" type="video/mp4"></video>
+      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/1.avif" width="160" height="200" alt="">
+      <video muted loop playsinline autoplay preload="none" width="160" height="200"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/5.mp4" type="video/mp4"></video>
+      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/4.avif" width="160" height="200" alt="">
+      <video muted loop playsinline autoplay preload="none" width="160" height="200"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/2.mp4" type="video/mp4"></video>
+      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/6.webp" width="160" height="200" alt="">
+      <video muted loop playsinline autoplay preload="none" width="160" height="200"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/3.mp4" type="video/mp4"></video>
+      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/8.avif" width="160" height="200" alt="">
+      <video muted loop playsinline autoplay preload="none" width="160" height="200"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/7.mp4" type="video/mp4"></video>
       <!-- Bộ 2 -->
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/1.avif" alt="" aria-hidden="true">
-      <video muted loop playsinline autoplay preload="metadata" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/5.mp4" type="video/mp4"></video>
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/4.avif" alt="" aria-hidden="true">
-      <video muted loop playsinline autoplay preload="metadata" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/2.mp4" type="video/mp4"></video>
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/6.webp" alt="" aria-hidden="true">
-      <video muted loop playsinline autoplay preload="metadata" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/3.mp4" type="video/mp4"></video>
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/8.avif" alt="" aria-hidden="true">
-      <video muted loop playsinline autoplay preload="metadata" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/7.mp4" type="video/mp4"></video>
+      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/1.avif" width="160" height="200" alt="" aria-hidden="true">
+      <video muted loop playsinline autoplay preload="none" width="160" height="200" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/5.mp4" type="video/mp4"></video>
+      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/4.avif" width="160" height="200" alt="" aria-hidden="true">
+      <video muted loop playsinline autoplay preload="none" width="160" height="200" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/2.mp4" type="video/mp4"></video>
+      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/6.webp" width="160" height="200" alt="" aria-hidden="true">
+      <video muted loop playsinline autoplay preload="none" width="160" height="200" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/3.mp4" type="video/mp4"></video>
+      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/8.avif" width="160" height="200" alt="" aria-hidden="true">
+      <video muted loop playsinline autoplay preload="none" width="160" height="200" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/7.mp4" type="video/mp4"></video>
       <!-- Bộ 3 -->
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/1.avif" alt="" aria-hidden="true">
-      <video muted loop playsinline autoplay preload="metadata" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/5.mp4" type="video/mp4"></video>
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/4.avif" alt="" aria-hidden="true">
-      <video muted loop playsinline autoplay preload="metadata" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/2.mp4" type="video/mp4"></video>
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/6.webp" alt="" aria-hidden="true">
-      <video muted loop playsinline autoplay preload="metadata" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/3.mp4" type="video/mp4"></video>
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/8.avif" alt="" aria-hidden="true">
-      <video muted loop playsinline autoplay preload="metadata" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/7.mp4" type="video/mp4"></video>
-      <!-- Bộ 4 (= bộ loop, translateX(-50%) snap về đây) -->
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/1.avif" alt="" aria-hidden="true">
-      <video muted loop playsinline autoplay preload="metadata" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/5.mp4" type="video/mp4"></video>
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/4.avif" alt="" aria-hidden="true">
-      <video muted loop playsinline autoplay preload="metadata" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/2.mp4" type="video/mp4"></video>
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/6.webp" alt="" aria-hidden="true">
-      <video muted loop playsinline autoplay preload="metadata" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/3.mp4" type="video/mp4"></video>
-      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/8.avif" alt="" aria-hidden="true">
-      <video muted loop playsinline autoplay preload="metadata" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/7.mp4" type="video/mp4"></video>
+      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/1.avif" width="160" height="200" alt="" aria-hidden="true">
+      <video muted loop playsinline autoplay preload="none" width="160" height="200" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/5.mp4" type="video/mp4"></video>
+      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/4.avif" width="160" height="200" alt="" aria-hidden="true">
+      <video muted loop playsinline autoplay preload="none" width="160" height="200" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/2.mp4" type="video/mp4"></video>
+      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/6.webp" width="160" height="200" alt="" aria-hidden="true">
+      <video muted loop playsinline autoplay preload="none" width="160" height="200" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/3.mp4" type="video/mp4"></video>
+      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/8.avif" width="160" height="200" alt="" aria-hidden="true">
+      <video muted loop playsinline autoplay preload="none" width="160" height="200" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/7.mp4" type="video/mp4"></video>
+      <!-- Bộ 4 -->
+      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/1.avif" width="160" height="200" alt="" aria-hidden="true">
+      <video muted loop playsinline autoplay preload="none" width="160" height="200" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/5.mp4" type="video/mp4"></video>
+      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/4.avif" width="160" height="200" alt="" aria-hidden="true">
+      <video muted loop playsinline autoplay preload="none" width="160" height="200" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/2.mp4" type="video/mp4"></video>
+      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/6.webp" width="160" height="200" alt="" aria-hidden="true">
+      <video muted loop playsinline autoplay preload="none" width="160" height="200" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/3.mp4" type="video/mp4"></video>
+      <img src="https://tryholo.ai/rootPage/assets/featuresCarousel/8.avif" width="160" height="200" alt="" aria-hidden="true">
+      <video muted loop playsinline autoplay preload="none" width="160" height="200" aria-hidden="true"><source src="https://tryholo.ai/rootPage/assets/featuresCarousel/7.mp4" type="video/mp4"></video>
     </div>
 
   </div>
@@ -1692,70 +1705,5 @@ console.log("MANUAL EMAIL =", emailInput.value);
     }, { passive: true });
   })();
 </script>
-
-<script>
-  /* Rail cuộn pixel-perfect — đo width thực, loop không nhảy */
-  (function() {
-    function initRail(rail) {
-      var items = Array.from(rail.children);
-      var half = Math.floor(items.length / 2);
-      /* Tính chiều rộng chính xác của 1 bộ (nửa đầu) */
-      function getSetWidth() {
-        var w = 0;
-        for (var i = 0; i < half; i++) {
-          var r = items[i].getBoundingClientRect();
-          w += r.width;
-        }
-        /* Cộng thêm gap giữa các item (12px * số gap trong 1 bộ) */
-        w += 12 * (half - 1);
-        /* Cộng gap cuối cùng sang bộ tiếp theo */
-        w += 12;
-        return w;
-      }
-
-      var setWidth = 0;
-      var pos = 0;
-      var speed = 0.6; /* px/frame — ~36px/s ở 60fps */
-      var raf;
-
-      function tick() {
-        pos += speed;
-        if (pos >= setWidth) pos -= setWidth;
-        rail.style.transform = 'translate3d(-' + pos + 'px, 0, 0)';
-        raf = requestAnimationFrame(tick);
-      }
-
-      function start() {
-        setWidth = getSetWidth();
-        if (setWidth > 0) {
-          cancelAnimationFrame(raf);
-          raf = requestAnimationFrame(tick);
-        }
-      }
-
-      /* Đợi ảnh/video load xong rồi mới đo */
-      var imgs = rail.querySelectorAll('img');
-      var loaded = 0;
-      if (imgs.length === 0) {
-        start();
-      } else {
-        imgs.forEach(function(img) {
-          if (img.complete) { loaded++; if (loaded === imgs.length) start(); }
-          else img.addEventListener('load', function() { loaded++; if (loaded === imgs.length) start(); });
-        });
-        /* Fallback nếu load quá lâu */
-        setTimeout(start, 800);
-      }
-
-      /* Resize: đo lại */
-      window.addEventListener('resize', function() {
-        setWidth = getSetWidth();
-      });
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-      document.querySelectorAll('.rail-ltr').forEach(initRail);
-    });
-  })();
-</script>
+</html>
 </html>
